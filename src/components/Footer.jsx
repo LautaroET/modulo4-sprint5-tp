@@ -1,25 +1,20 @@
-// Importa React y el hook useContext.
-import React, { useContext } from 'react';
-// Importa el contexto del tema.
-import { TemaContext } from '../context/TemaContext';
+import React from "react";
 
+/**
+ * @component Footer
+ * @description Componente que renderiza el pie de página de la aplicación.
+ */
 function Footer() {
-  // Accede al estado del tema desde el contexto.
-  const { temaOscuro } = useContext(TemaContext);
-
-  // Clases dinámicas para el footer
-  const footerClasses = temaOscuro
-    ? 'py-8 text-center text-gray-300 w-full bg-gray-900 relative shadow-inner' // Tema oscuro
-    : 'py-8 text-center text-gray-300 w-full bg-blue-950 relative shadow-inner'; // Tema claro
-
   return (
-    <footer className={footerClasses}> {/* Usa la clase dinámica */}
-      <div className="container mx-auto px-4">
-        <p className="text-lg md:text-xl font-medium tracking-wide">
-          &copy; <span className="text-sky-300">Catamarca Ajedrez</span> - Desarrollado por <span className="text-sky-300">Lautaro Tapia</span> - 2025
+    <footer className="bg-blue-700 flex justify-center py-4 transition-colors duration-700
+                      dark:bg-indigo-900">
+      <div className="container mx-auto px-4 text-center">
+        <p className="text-white text-lg md:text-xl font-medium tracking-wide">
+          &copy; <span className="text-amber-300">Personajes Rick And Morty</span> - Desarrollado por{" "}
+          <span className="text-amber-300">Lautaro Tapia</span> - 2025
         </p>
-        <p className="text-sm mt-1 text-gray-400">
-          Módulo 4 - Sprint 5 Trabajo Practico
+        <p className="text-sm mt-1 text-blue-100 dark:text-gray-400">
+          Módulo 4 - Sprint 4 Trabajo Práctico
         </p>
       </div>
     </footer>
@@ -27,3 +22,4 @@ function Footer() {
 }
 
 export default Footer;
+

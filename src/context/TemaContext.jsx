@@ -46,3 +46,6 @@ const TemaProvider = ({ children }) => {
 };
 
 export default TemaProvider;
+
+
+

@@ -1,114 +1,67 @@
-// Importa React y los hooks `useState` y `useContext`.
-import React, { useState, useContext } from 'react';
-// Importa los enlaces de la barra de navegación.
-import { navbarLink } from '../utils/link';
-// Importa el contexto del tema.
+import React, { useContext } from "react";
 import { TemaContext } from "../context/TemaContext";
 
-const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleMenu = () => setIsOpen(!isOpen);
+/**
+ * @component Header
+ * @param {{onToggleFavorites: Function}} props - Función para alternar el modal de favoritos.
+ * @description Componente del encabezado que incluye el logo, el alternador de tema y el botón de favoritos.
+ */
+function Header({ onToggleFavorites }) {
+  // Obtiene el estado y la función para alternar el tema del contexto.
   const { temaOscuro, alternarTema } = useContext(TemaContext);
 
-  // Clases dinámicas para el header
-  const headerClasses = temaOscuro
-    ? 'w-full bg-gray-900 shadow-lg relative' // Tema oscuro
-    : 'w-full bg-blue-950 shadow-lg relative'; // Tema claro
-
-  const textClasses = temaOscuro
-    ? 'text-white text-2xl font-extrabold tracking-wide' // Tema oscuro
-    : 'text-white text-2xl font-extrabold tracking-wide'; // Ambas clases son iguales, puedes dejarlas así o eliminarlas.
-
   return (
-    <nav className={headerClasses}> {/* Usa la clase dinámica */}
-      <div className='flex justify-between items-center px-4 py-3 sm:px-12'>
-        <div className='flex items-center gap-3'>
-          <img
-            src={'/peon.png'}
-            alt='Logo de Ajedrez de Catamarca'
-            className='w-16 h-16 object-contain'
-          />
-          <p className={textClasses}>
-            Catamarca <span className='text-sky-300'>Ajedrez</span>
-          </p>
-          <button
-            onClick={alternarTema}
-            className="text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-300 hover:scale-105 transition-transform duration-300"
-          >
-            {temaOscuro ? (
-              <i className="bi bi-sun-fill text-xl"></i>
-            ) : (
-              <i className="bi bi-moon-fill text-xl"></i>
-            )}
-          </button>
-        </div>
-
+    <header className="w-full bg-blue-700 shadow-xl p-4 flex justify-between items-center transition-colors duration-700 dark:bg-indigo-900">
+      <div className="flex items-center gap-3">
+        <img
+          src={"/img/Rick_And_Morty.png"}
+          alt="Logo de Rick and Morty"
+          className="w-16 h-16 object-contain"
+        />
+        <h1 className="text-white text-2xl font-extrabold tracking-wide">
+          <span className="text-amber-300">Rick</span> <em>And</em>  <span className="text-amber-300">Morty</span>
+        </h1>
+      </div>
+      <div className="flex items-center gap-4">
+        {/* Botón para alternar entre tema claro y oscuro */}
         <button
-          className='md:hidden text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-300'
-          onClick={toggleMenu}
-          aria-label='Abrir menú de navegación'
+          onClick={alternarTema}
+          className="text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-300 hover:scale-105 transition-transform duration-300"
         >
-          <svg
-            className='w-7 h-7'
-            fill='none'
-            stroke='currentColor'
-            viewBox='0 0 24 24'
-          >
-            {isOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
+          {temaOscuro ? (
+            <i className="bi bi-sun-fill text-xl"></i>
+          ) : (
+            <i className="bi bi-moon-fill text-xl"></i>
+          )}
         </button>
 
-        <div className='hidden md:block'>
-          <ul className='flex space-x-6'>
-            {navbarLink.map((link) => (
-              <li key={link.id}>
-                <a
-                  href={link.link}
-                  className='text-white text-base font-medium hover:text-sky-300 transition-colors duration-300 transform hover:scale-105 inline-block'
-                >
-                  {link.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* Botón para abrir el modal de favoritos */}
+        <button
+          onClick={onToggleFavorites}
+          className="text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-300 flex items-center hover:scale-105 transition-transform duration-300"
+        >
+          Ver Favoritos
+          <svg
+            className="w-7 h-7 ml-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+            />
+          </svg>
+        </button>
       </div>
-
-      <div
-        className={`md:hidden absolute left-0 w-full z-10 overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-        } ${temaOscuro ? 'bg-gray-800' : 'bg-blue-900'}`} // Clases dinámicas para el menú móvil
-      >
-        <ul className='flex flex-col py-4 px-4'>
-          {navbarLink.map((link) => (
-            <li key={link.id} className='py-3 text-center border-b border-blue-800 last:border-b-0'>
-              <a
-                href={link.link}
-                className='text-white text-lg font-semibold hover:text-sky-300 transition-colors duration-200 block w-full'
-                onClick={toggleMenu}
-              >
-                {link.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </nav>
+    </header>
   );
-};
+}
 
 export default Header;
+
+
+
+
