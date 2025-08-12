@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { TemaContext } from "../context/TemaContext";
 import { navbarLink } from "../utils/link";
-
+import { Link } from 'react-router-dom';
 
 function Header({ onToggleFavorites }) {
   const { temaOscuro, alternarTema } = useContext(TemaContext);
@@ -94,9 +94,9 @@ function Header({ onToggleFavorites }) {
             
             return (
               <li key={link.id}>
-                <a href={link.link} className={linkClasses}>
+                <Link to={link.link} className={linkClasses}>
                   {link.title}
-                </a>
+                </Link>
               </li>
             );
           })}
@@ -104,25 +104,23 @@ function Header({ onToggleFavorites }) {
       </nav>
 
       {/* Menú desplegable para móviles */}
-      <nav
-        className={`md:hidden absolute top-[7rem] left-0 w-full bg-blue-900 z-10 overflow-hidden transition-all duration-300 ease-in-out ${
+      <nav className={`md:hidden absolute top-[7rem] left-0 w-full bg-blue-900 z-10 overflow-hidden transition-all duration-300 ease-in-out ${
           isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <ul className="flex flex-col py-4 px-4">
-          {navbarLink.map((link) => (
-            <li key={link.id} className="py-3 text-center border-b border-blue-800 last:border-b-0">
-              <a
-                href={link.link}
-                className="text-white text-lg font-semibold hover:text-sky-300 transition-colors duration-200 block w-full"
-                onClick={toggleMenu}
-              >
-                {link.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+        }`}>
+          <ul className="flex flex-col py-4 px-4">
+            {navbarLink.map((link) => (
+              <li key={link.id} className="py-3 text-center border-b border-blue-800 last:border-b-0">
+                <Link
+                  to={link.link}
+                  className="text-white text-lg font-semibold hover:text-sky-300 transition-colors duration-200 block w-full"
+                  onClick={toggleMenu}
+                >
+                  {link.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
     </header>
   );
 }
