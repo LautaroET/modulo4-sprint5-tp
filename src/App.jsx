@@ -1,41 +1,19 @@
 import React, { useState } from "react";
+import { BrowserRouter } from 'react-router-dom';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import SearchInput from "./components/SearchInput";
-import CharacterList from "./components/CharacterList";
-import Loader from "./components/Loader";
 import FavoritesModal from "./components/FavoritesModal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { BrowserRouter } from 'react-router-dom';
-import AppRouter from './Router/AppRouter';
 
 import FavoritosProvider from "./context/FavoritosContext";
 import TemaProvider from "./context/TemaContext";
-import { useCharacters } from "../src/hook/useCharacters";
 
-/**
- * @component App
- * @description Componente principal de la aplicación.
- * Gestiona el estado de la UI y utiliza hooks personalizados y contextos para la lógica de datos y el tema.
- */
+import AppRouter from "./Router/AppRouter"; 
+
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Usa el custom hook para gestionar toda la lógica relacionada con los personajes
-  const { 
-    characters, 
-    allCharacters, 
-    isLoading, 
-    setQuery, 
-    setAmount, 
-    handleShowMore 
-  } = useCharacters();
-
-  /**
-   * @function toggleModal
-   * @description Alterna la visibilidad del modal de favoritos.
-   */
+  
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
   };
@@ -48,16 +26,6 @@ function App() {
             <Header onToggleFavorites={toggleModal} />
             <main className="container mx-auto p-4 py-12">
               <AppRouter />
-              <SearchInput onInputChange={setQuery} onAmountChange={setAmount} />
-              {isLoading ? (
-                <Loader />
-              ) : (
-                <CharacterList 
-                  characters={characters} 
-                  allCharacters={allCharacters} 
-                  onShowMore={handleShowMore} 
-                />
-              )}
             </main>
             {isModalOpen && <FavoritesModal onClose={toggleModal} />}
             <Footer />
