@@ -1,61 +1,128 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { TemaContext } from "../context/TemaContext";
+import { navbarLink } from "../utils/link";
 
-/**
- * @component Header
- * @param {{onToggleFavorites: Function}} props - Función para alternar el modal de favoritos.
- * @description Componente del encabezado que incluye el logo, el alternador de tema y el botón de favoritos.
- */
+
 function Header({ onToggleFavorites }) {
-  // Obtiene el estado y la función para alternar el tema del contexto.
   const { temaOscuro, alternarTema } = useContext(TemaContext);
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <header className="w-full bg-blue-700 shadow-xl p-4 flex justify-between items-center transition-colors duration-700 dark:bg-indigo-900">
-      <div className="flex items-center gap-3">
-        <img
-          src={"/img/Rick_And_Morty.png"}
-          alt="Logo de Rick and Morty"
-          className="w-16 h-16 object-contain"
-        />
-        <h1 className="text-white text-2xl font-extrabold tracking-wide">
-          <span className="text-amber-300">Rick</span> <em>And</em>  <span className="text-amber-300">Morty</span>
-        </h1>
-      </div>
-      <div className="flex items-center gap-4">
-        {/* Botón para alternar entre tema claro y oscuro */}
-        <button
-          onClick={alternarTema}
-          className="text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-300 hover:scale-105 transition-transform duration-300"
-        >
-          {temaOscuro ? (
-            <i className="bi bi-sun-fill text-xl"></i>
-          ) : (
-            <i className="bi bi-moon-fill text-xl"></i>
-          )}
-        </button>
+    <header className="relative w-full min-h-[120px] bg-gradient-to-r from-blue-700 to-indigo-900 shadow-xl transition-colors duration-700 dark:from-indigo-900 dark:to-gray-900">
+      {/* Contenedor principal para el contenido del header */}
+      <div className="container mx-auto flex items-center justify-between p-4">
+        {/* Logo y título */}
+        <div className="flex items-center gap-3">
+          <img
+            src={"/img/patita.png"}
+            alt="Logo de patitas"
+            className="w-16 h-16 object-contain"
+          />
+          <h1 className="text-white text-2xl font-extrabold tracking-wide">
+            <span className="text-amber-300">Patitas</span> <em>al</em>{" "}
+            <span className="text-amber-300">Rescate</span>
+          </h1>
+        </div>
 
-        {/* Botón para abrir el modal de favoritos */}
-        <button
-          onClick={onToggleFavorites}
-          className="text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-300 flex items-center hover:scale-105 transition-transform duration-300"
-        >
-          Ver Favoritos
-          <svg
-            className="w-7 h-7 ml-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        {/* Botones de utilidades y menú de hamburguesa */}
+        <div className="flex items-center gap-4 md:gap-6">
+          {/* Botón para alternar tema */}
+          <button
+            onClick={alternarTema}
+            className="text-white p-2 rounded-full bg-white/20 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-amber-300 hover:scale-110 transition-transform duration-300"
+            aria-label="Alternar tema"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-            />
-          </svg>
-        </button>
+            {temaOscuro ? (
+              <i className="bi bi-sun-fill text-xl"></i>
+            ) : (
+              <i className="bi bi-moon-fill text-xl"></i>
+            )}
+          </button>
+          
+          {/* Botón para favoritos (solo visible en escritorio) */}
+          <button
+            onClick={onToggleFavorites}
+            className="hidden md:block text-white p-2 rounded-full bg-white/20 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-amber-300 hover:scale-110 transition-transform duration-300"
+            aria-label="Abrir favoritos"
+          >
+            <svg
+              className="w-7 h-7"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+          </button>
+
+          {/* Botón para Mi Cuenta (nuevo) */}
+          <button
+            className="hidden md:block text-white p-2 rounded-full bg-white/20 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-sky-300 hover:scale-110 transition-transform duration-300"
+            aria-label="Mi Cuenta"
+          >
+            <i className="bi bi-person-fill text-2xl"></i>
+          </button>
+
+          {/* Botón de hamburguesa (visible solo en móviles) */}
+          <button
+            className="md:hidden text-white p-2 rounded-md bg-white/20 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-sky-300"
+            onClick={toggleMenu}
+            aria-label="Abrir menú de navegación"
+          >
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
+
+      {/* Barra de navegación de escritorio - Posicionada abajo del header */}
+      <nav className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 hidden md:block">
+        <ul className="flex space-x-1 bg-white/20 backdrop-blur-sm rounded-full shadow-lg border border-white/10 p-1">
+          {navbarLink.map((link) => {
+            const isHowToAdopt = link.title === "Cómo Adoptar ";
+            
+            let linkClasses = "text-white text-base font-medium px-4 py-2 rounded-full inline-block hover:text-amber-300 transition-all duration-300 transform hover:scale-105";
+
+            if (isHowToAdopt) {
+              linkClasses = "text-white text-base font-bold px-4 py-2 rounded-full inline-block hover:text-amber-300 transition-all duration-300 transform hover:scale-105";
+            }
+            
+            return (
+              <li key={link.id}>
+                <a href={link.link} className={linkClasses}>
+                  {link.title}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+      {/* Menú desplegable para móviles */}
+      <nav
+        className={`md:hidden absolute top-[7rem] left-0 w-full bg-blue-900 z-10 overflow-hidden transition-all duration-300 ease-in-out ${
+          isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <ul className="flex flex-col py-4 px-4">
+          {navbarLink.map((link) => (
+            <li key={link.id} className="py-3 text-center border-b border-blue-800 last:border-b-0">
+              <a
+                href={link.link}
+                className="text-white text-lg font-semibold hover:text-sky-300 transition-colors duration-200 block w-full"
+                onClick={toggleMenu}
+              >
+                {link.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </header>
   );
 }
