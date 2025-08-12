@@ -1,35 +1,36 @@
-// Importa React.
-import React from 'react'
-// Importa los datos de las noticias desde un archivo de utilidades.
-import { noticia } from '../utils/noticia'
-// Importa el componente Card.
-import Card from './Card'
+// Importa React y el hook useContext.
+import React, { useContext } from 'react';
+// Importa el contexto del tema que creaste.
+import { TemaContext } from '../context/TemaContext';
 
 // Define el componente funcional Main.
 function Main() {
+  // Accede al estado del tema desde el contexto.
+  const { temaOscuro } = useContext(TemaContext);
+
+  // Define las clases de CSS dinámicamente según el estado del tema.
+  const mainClasses = temaOscuro
+    ? 'bg-gray-800 text-gray-100 min-h-screen py-8 px-4' // Clases para el tema oscuro
+    : 'bg-white text-gray-900 min-h-screen py-8 px-4'; // Clases para el tema claro
+
+  const h1Classes = temaOscuro
+    ? 'text-4xl font-bold text-center mb-10 text-blue-400' // Clases para tema oscuro
+    : 'text-4xl font-bold text-center mb-10 text-blue-600'; // Clases para tema claro
+
   return (
-    // Contenedor principal del contenido, con fondo gris oscuro y texto blanco.
-    <main className="bg-gray-900 text-white min-h-screen py-8 px-4">
-      <div className="max-w-6xl mx-auto"> {/* Contenedor centrado y con ancho máximo. */}
-        <h1 className="text-4xl font-bold text-center mb-10 text-blue-400">
-          Noticias {/* Título de la sección. */}
+    <main className={mainClasses}> {/* Usa las clases dinámicas aquí */}
+      <div className="max-w-6xl mx-auto">
+        <h1 className={h1Classes}> {/* Usa las clases dinámicas para el título */}
+          Noticias
         </h1>
         {/* Contenedor de la cuadrícula para las tarjetas de noticias, responsivo. */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {/* Mapea sobre el array `noticia` para renderizar una `Card` por cada noticia. */}
-          {noticia.map((noticia) => (
-            <Card
-              key={noticia.id} // `key` única para cada elemento de la lista.
-              titulo={noticia.titulo} // Pasa el título como prop.
-              imagen={noticia.image} // Pasa la URL de la imagen como prop.
-              descripcion={noticia.descripcion} // Pasa la descripción como prop.
-            />
-          ))}
+          {/* Aquí se renderizarán las tarjetas de noticias */}
         </div>
       </div>
     </main>
-  )
+  );
 }
 
 // Exporta Main como el componente predeterminado.
-export default Main
+export default Main;
