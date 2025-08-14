@@ -4,10 +4,9 @@ import { FavoritosContext } from "../context/FavoritosContext";
 /**
  * @component FavoritesModal
  * @param {{onClose: Function}} props - Función para cerrar el modal.
- * @description Muestra un modal con la lista de personajes favoritos.
+ * @description Muestra un modal con la lista de refugios favoritos.
  */
 function FavoritesModal({ onClose }) {
-  // Obtiene las funciones y el estado del contexto de favoritos.
   const { favoritos, eliminarDeFavoritos, vaciarFavoritos } = useContext(
     FavoritosContext
   );
@@ -20,7 +19,7 @@ function FavoritesModal({ onClose }) {
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-3xl font-bold text-indigo-700 dark:text-blue-400">
-            Mis Favoritos
+            Mis Refugios Favoritos 🐾
           </h2>
           <button
             onClick={onClose}
@@ -32,28 +31,28 @@ function FavoritesModal({ onClose }) {
 
         {favoritos.length === 0 ? (
           <p className="text-gray-600 dark:text-gray-300 text-center py-8">
-            Aún no has agregado personajes favoritos.
+            Aún no has agregado refugios favoritos.
           </p>
         ) : (
           <ul className="space-y-4">
-            {favoritos.map((character) => (
+            {favoritos.map((refugio) => (
               <li
-                key={character.id}
+                key={refugio.id}
                 className="flex items-center justify-between bg-gray-50 p-3 rounded-md shadow-sm transition-colors duration-500
                         dark:bg-gray-700"
               >
                 <div className="flex items-center gap-3">
                   <img
-                    src={character.image}
-                    alt={character.name}
+                    src={refugio.photo}
+                    alt={refugio.name}
                     className="w-12 h-12 object-cover rounded-full"
                   />
                   <span className="text-gray-800 font-medium dark:text-gray-100">
-                    {character.name}
+                    {refugio.name}
                   </span>
                 </div>
                 <button
-                  onClick={() => eliminarDeFavoritos(character.id)}
+                  onClick={() => eliminarDeFavoritos(refugio.id)}
                   className="text-red-500 hover:text-red-700 ml-4 transition-colors dark:text-red-400 dark:hover:text-red-300"
                 >
                   Eliminar

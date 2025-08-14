@@ -1,36 +1,24 @@
 import React from 'react';
-import SearchInput from "../components/SearchInput";
-import CharacterList from "../components/CharacterList";
+import RefugioList from "../components/RefugioList";
 import Loader from "../components/Loader";
+import { useRefugios } from "../hook/useRefugios";
 
-// Import the custom hook
-import { useCharacters } from "../hook/useCharacters";
-
-const Refugio = () => {
-  // Now you can use the hook without errors
-  const { 
-    characters, 
-    allCharacters, 
-    isLoading, 
-    setQuery, 
-    setAmount, 
-    handleShowMore 
-  } = useCharacters();
+const Refugios = () => {
+  const { refugios, allRefugios, isLoading, handleShowMore } = useRefugios();
 
   return (
-    <>
-      <SearchInput onInputChange={setQuery} onAmountChange={setAmount} />
+    <div className="bg-gradient-to-b from-blue-700 to-indigo-900 min-h-screen p-4 transition-colors duration-700 dark:from-indigo-900 dark:to-gray-900">
       {isLoading ? (
         <Loader />
       ) : (
-        <CharacterList 
-          characters={characters} 
-          allCharacters={allCharacters} 
+        <RefugioList 
+          refugios={refugios} 
+          allRefugios={allRefugios} 
           onShowMore={handleShowMore} 
         />
       )}
-    </>
+    </div>
   );
 };
 
-export default Refugio;
+export default Refugios;
