@@ -1,5 +1,6 @@
 import React from "react";
 import RefugioCard from "./RefugioCard";
+import Button from "./Button";
 
 function RefugioList({ refugios, allRefugios, onShowMore }) {
   const canShowMore = refugios.length < allRefugios.length;
@@ -14,12 +15,9 @@ function RefugioList({ refugios, allRefugios, onShowMore }) {
           
           {canShowMore && (
             <div className="col-span-full flex justify-center mt-8">
-              <button
-                onClick={onShowMore}
-                className="bg-amber-300 text-blue-900 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-amber-400 transition duration-300 transform hover:scale-105 dark:bg-yellow-400 dark:hover:bg-yellow-500"
-              >
+              <Button onClick={onShowMore}>
                 Mostrar más refugios
-              </button>
+              </Button>
             </div>
           )}
         </>

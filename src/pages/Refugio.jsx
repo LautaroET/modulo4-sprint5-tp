@@ -2,27 +2,50 @@ import React, { useState } from 'react';
 import RefugioList from "../components/RefugioList";
 import Loader from "../components/Loader";
 import SearchInput from "../components/SearchInput";
+import Button from "../components/Button";
 import { useRefugios } from "../hook/useRefugios";
+import { useNavigate } from 'react-router-dom';
 
 const Refugios = () => {
   const [searchValue, setSearchValue] = useState("");
   const { refugios, allRefugios, isLoading, handleShowMore } = useRefugios(searchValue);
+  const navigate = useNavigate();
+
+  const handleAddRefugio = () => {
+    navigate('/nuevo-refugio');
+  };
 
   return (
-    <div className="bg-gradient-to-b from-blue-700 to-indigo-900 min-h-screen p-4 transition-colors duration-700 dark:from-indigo-900 dark:to-gray-900">
-      
-      {/* Buscador solo por nombre */}
-      <SearchInput onSearchChange={setSearchValue} />
+    <div className="bg-gray-100 dark:bg-gray-900 min-h-screen py-8 transition-colors duration-700">
+      <div className="container mx-auto px-4 md:px-8">
+        
+        {/* Sección de cabecera con el título y el botón */}
+        <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
+          <h1 className="text-4xl font-extrabold text-indigo-700 dark:text-blue-400 text-center sm:text-left tracking-tight">
+            Encuentra tu Próximo Compañero
+          </h1>
+          <Button onClick={handleAddRefugio}>
+            <i className="bi bi-plus-circle-fill mr-2"></i>Agregar Nuevo
+          </Button>
+        </div>
 
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <RefugioList 
-          refugios={refugios} 
-          allRefugios={allRefugios} 
-          onShowMore={handleShowMore} 
-        />
-      )}
+        {/* Sección del buscador, centrada y con un ancho máximo */}
+        <div className="flex justify-center mb-12">
+          <div className="w-full max-w-xl">
+            <SearchInput onSearchChange={setSearchValue} />
+          </div>
+        </div>
+
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <RefugioList 
+            refugios={refugios} 
+            allRefugios={allRefugios} 
+            onShowMore={handleShowMore} 
+          />
+        )}
+      </div>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-// components/SearchInput.jsx
 import React, { useState } from "react";
 
 function SearchInput({ onSearchChange }) {
@@ -11,14 +10,17 @@ function SearchInput({ onSearchChange }) {
   };
 
   return (
-    <div className="mb-8 flex flex-col sm:flex-row gap-4">
+    <div className="relative mb-8 max-w-lg mx-auto">
       <input
         type="text"
         value={searchValue}
         onChange={handleChange}
         placeholder="Buscar por nombre o ubicación"
-        className="w-full p-3 rounded-lg border border-gray-300"
+        className="w-full p-3 pl-10 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
       />
+      <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
+        <i className="bi bi-search text-xl"></i>
+      </div>
     </div>
   );
 }

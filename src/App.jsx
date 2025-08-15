@@ -11,11 +11,7 @@ import AppRouter from "../src/Router/AppRouter"
 
 import { BrowserRouter } from 'react-router-dom';
 
-/**
- * @component App
- * @description Componente principal de la aplicación.
- * Gestiona el estado de la UI y utiliza hooks personalizados y contextos para la lógica de datos y el tema.
- */
+
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 

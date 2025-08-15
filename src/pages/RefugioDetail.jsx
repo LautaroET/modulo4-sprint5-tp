@@ -1,5 +1,3 @@
-// src/components/RefugioDetail.jsx
-
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';

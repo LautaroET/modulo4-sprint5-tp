@@ -1,9 +1,5 @@
 import React from "react";
 
-/**
- * @component Footer
- * @description Componente que renderiza el pie de página de la aplicación.
- */
 function Footer() {
   return (
     <footer className="bg-blue-700 flex justify-center py-4 transition-colors duration-700
