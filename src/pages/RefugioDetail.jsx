@@ -1,31 +1,17 @@
-import React, { useState, useEffect } from 'react';
+// src/components/RefugioDetail.jsx
+
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Loader from '../components/Loader';
-import MascotaCard from '../components/MascotaCard'; // Importamos el nuevo componente
+import MascotaCard from '../components/MascotaCard';
+import Button from '../components/Button';
+import { useRefugioDetail } from '../hook/useRefugioDetail';
 
 const RefugioDetail = () => {
   const { id } = useParams();
-  const [refugio, setRefugio] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchRefugioDetail = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/refugios/${id}`);
-        setRefugio(response.data);
-      } catch (err) {
-        setError("No se pudo cargar la información del refugio. Inténtalo de nuevo más tarde.");
-        console.error("Error fetching refugio detail:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchRefugioDetail();
-  }, [id]);
+  const { refugio, isLoading, error } = useRefugioDetail(id);
 
   if (isLoading) {
     return <Loader />;
@@ -62,18 +48,12 @@ const RefugioDetail = () => {
           </button>
 
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-            <button
-              onClick={() => { /* Lógica de edición aquí */ }}
-              className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-300"
-            >
+            <Button onClick={() => { /* Lógica de edición aquí */ }}>
               <i className="bi bi-pencil-square mr-2"></i>Editar
-            </button>
-            <button
-              onClick={() => { /* Lógica de eliminación aquí */ }}
-              className="bg-red-500 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-red-600 transition-colors duration-300"
-            >
+            </Button>
+            <Button onClick={() => { /* Lógica de eliminación aquí */ }}>
               <i className="bi bi-trash-fill mr-2"></i>Eliminar
-            </button>
+            </Button>
           </div>
         </div>
         
@@ -134,17 +114,13 @@ const RefugioDetail = () => {
                 <h3 className="text-2xl font-bold text-indigo-700 dark:text-blue-400">
                   Mascotas Disponibles
                 </h3>
-                <button
-                  onClick={() => { /* Lógica para agregar mascota aquí */ }}
-                  className="bg-green-500 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-green-600 transition-colors duration-300 text-sm md:text-base"
-                >
+                <Button onClick={() => { /* Lógica para agregar mascota aquí */ }}>
                   <i className="bi bi-plus-circle-fill mr-2"></i>Agregar Mascota
-                </button>
+                </Button>
               </div>
               
               {refugio.pets && refugio.pets.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {/* Renderizamos las mascotas con el nuevo componente */}
                   {refugio.pets.map(pet => (
                     <MascotaCard key={pet.id} mascota={pet} />
                   ))}

@@ -17,7 +17,7 @@ function RefugioCard({ refugio }) {
     <Link to={`/refugios/${refugio.id}`}>
       <div
         className="relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300
-                   dark:bg-gray-800 dark:shadow-2xl dark:hover:shadow-lg flex flex-col"
+                  dark:bg-gray-800 dark:shadow-2xl dark:hover:shadow-lg flex flex-col"
       >
         {/* Botón de corazón (envuelto para detener la propagación del clic) */}
         <button
@@ -35,7 +35,7 @@ function RefugioCard({ refugio }) {
         {/* Contenedor de la imagen */}
         <div className="relative w-full h-52 overflow-hidden">
           <img
-            src={refugio.photo}
+            src={refugio.image}
             alt={`Imagen de ${refugio.name}`}
             className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110"
           />

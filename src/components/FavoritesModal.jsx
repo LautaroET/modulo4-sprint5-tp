@@ -1,11 +1,7 @@
 import React, { useContext } from "react";
 import { FavoritosContext } from "../context/FavoritosContext";
 
-/**
- * @component FavoritesModal
- * @param {{onClose: Function}} props - Función para cerrar el modal.
- * @description Muestra un modal con la lista de refugios favoritos.
- */
+
 function FavoritesModal({ onClose }) {
   const { favoritos, eliminarDeFavoritos, vaciarFavoritos } = useContext(
     FavoritosContext

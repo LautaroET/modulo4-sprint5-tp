@@ -1,11 +1,6 @@
 import React from "react";
 import RefugioCard from "./RefugioCard";
 
-/**
- * @component RefugioList
- * @param {{refugios: Array, allRefugios: Array, onShowMore: Function}} props
- * @description Muestra una lista de tarjetas de refugios y un botón para cargar más.
- */
 function RefugioList({ refugios, allRefugios, onShowMore }) {
   const canShowMore = refugios.length < allRefugios.length;
   

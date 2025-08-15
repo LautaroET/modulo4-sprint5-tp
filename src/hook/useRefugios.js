@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchAllRefugios } from "../services/apiService";
 
-export const useRefugios = () => {
+export const useRefugios = (searchValue = "") => {
   const [refugios, setRefugios] = useState([]);
   const [allRefugios, setAllRefugios] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -11,7 +11,7 @@ export const useRefugios = () => {
     setIsLoading(true);
     const getRefugios = async () => {
       try {
-        const data = await fetchAllRefugios();
+        const data = await fetchAllRefugios(searchValue);
         setAllRefugios(data);
         setRefugios(data.slice(0, amount));
       } catch (error) {
@@ -21,7 +21,7 @@ export const useRefugios = () => {
       }
     };
     getRefugios();
-  }, [amount]);
+  }, [amount, searchValue]);
 
   const handleShowMore = () => {
     setAmount((prevAmount) => prevAmount + 12);
