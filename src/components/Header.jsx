@@ -9,7 +9,7 @@ function Header({ onToggleFavorites }) {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <header className="relative w-full min-h-[120px] bg-gradient-to-r from-blue-700 to-indigo-900 shadow-xl transition-colors duration-700 dark:from-indigo-900 dark:to-gray-900 rounded-b-lg shadow-md">
+    <header className="relative w-full min-h-[120px] bg-gradient-to-r from-blue-700 to-indigo-900  transition-colors duration-700 dark:from-indigo-900 dark:to-gray-900 rounded-b-lg shadow-md">
       {/* Contenedor principal para el contenido del header */}
       <div className="container mx-auto flex items-center justify-between p-4">
         {/* Logo y título */}

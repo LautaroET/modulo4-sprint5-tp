@@ -3,6 +3,7 @@ import Home from '../pages/home';
 import Refugio from '../pages/Refugio';
 import RefugioDetail from '../pages/RefugioDetail';
 import NotFound from '../pages/NotFound';
+import Mascota from '../pages/Mascota';
 
 function AppRouter() {
   return (
@@ -10,6 +11,7 @@ function AppRouter() {
       <Route path="/" element={<Home />} />
       <Route path="/refugios" element={<Refugio />} />
       <Route path="/refugios/:id" element={<RefugioDetail />} />
+      <Route path='/mascotas' element={<Mascota/>}/>
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
