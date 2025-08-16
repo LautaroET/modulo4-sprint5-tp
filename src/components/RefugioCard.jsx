@@ -3,23 +3,26 @@ import { Link } from 'react-router-dom';
 import { FavoritosContext } from "../context/FavoritosContext";
 
 function RefugioCard({ refugio }) {
-  const { agregarAFavoritos, eliminarDeFavoritos, favoritos } = useContext(FavoritosContext);
-  const isFavorite = favoritos.some((fav) => fav.id === refugio.id);
+  const { favoritos = { refugios: [], mascotas: [] }, agregarAFavoritos, eliminarDeFavoritos } = useContext(FavoritosContext);
+  
+  // Asegurarse de que favoritos.refugios sea un array
+  const favoritosRefugios = Array.isArray(favoritos.refugios) ? favoritos.refugios : [];
+  
+  const isFavorite = favoritosRefugios.some((fav) => fav.id === refugio.id);
+
   const handleClick = (e) => {
-    // Evita que el Link se active cuando se hace clic en el botón
     e.preventDefault(); 
-    isFavorite ? eliminarDeFavoritos(refugio.id) : agregarAFavoritos(refugio);
+    isFavorite 
+      ? eliminarDeFavoritos(refugio.id, 'refugios')
+      : agregarAFavoritos(refugio, 'refugios');
   };
 
   const ariaLabel = isFavorite ? "Eliminar de favoritos" : "Agregar a favoritos";
 
   return (
     <Link to={`/refugios/${refugio.id}`}>
-      <div
-        className="relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300
-                  dark:bg-gray-800 dark:shadow-2xl dark:hover:shadow-lg flex flex-col"
-      >
-        {/* Botón de corazón (envuelto para detener la propagación del clic) */}
+      <div className="relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 dark:bg-gray-800 dark:shadow-2xl dark:hover:shadow-lg flex flex-col">
+        {/* Botón de corazón */}
         <button
           onClick={handleClick}
           className={`absolute top-4 right-4 p-2 rounded-full z-10 transition-colors duration-300
@@ -32,7 +35,7 @@ function RefugioCard({ refugio }) {
           <i className={`bi bi-heart${isFavorite ? "-fill" : ""} text-2xl`}></i>
         </button>
 
-        {/* Contenedor de la imagen */}
+        {/* Contenido de la tarjeta */}
         <div className="relative w-full h-52 overflow-hidden">
           <img
             src={refugio.image}
@@ -41,7 +44,6 @@ function RefugioCard({ refugio }) {
           />
         </div>
 
-        {/* Contenido de la tarjeta con la información principal */}
         <div className="p-6 flex flex-col flex-grow text-left">
           <h3 className="text-2xl font-bold text-indigo-700 dark:text-blue-400 mb-4 text-center">
             {refugio.name}

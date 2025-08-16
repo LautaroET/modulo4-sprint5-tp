@@ -1,23 +1,35 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FavoritosContext } from '../context/FavoritosContext';
 
 const MascotaCard = ({ mascota }) => {
+  const navigate = useNavigate();
   const { agregarAFavoritos, eliminarDeFavoritos, favoritos } = useContext(FavoritosContext);
+  
+  const isFavorite = favoritos.mascotas.some((fav) => fav.id === mascota.id);
 
-  const isFavorite = favoritos.some((fav) => fav.id === mascota.id);
-
-  const handleClick = (e) => {
+  const handleFavoriteClick = (e) => {
+    e.preventDefault();
     e.stopPropagation();
-    isFavorite ? eliminarDeFavoritos(mascota.id) : agregarAFavoritos(mascota);
+    isFavorite 
+      ? eliminarDeFavoritos(mascota.id, 'mascotas')
+      : agregarAFavoritos(mascota, 'mascotas');
+  };
+
+  const handleCardClick = () => {
+    navigate(`/mascotas/${mascota.id}`);
   };
 
   const ariaLabel = isFavorite ? "Eliminar de favoritos" : "Agregar a favoritos";
 
   return (
-    <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl cursor-pointer">
+    <div 
+      onClick={handleCardClick}
+      className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl cursor-pointer"
+    >
       {/* Botón de corazón de favorito */}
       <button
-        onClick={handleClick}
+        onClick={handleFavoriteClick}
         className={`absolute top-4 right-4 p-3 rounded-full z-10 transition-colors duration-300
           ${isFavorite
             ? "text-red-500 bg-white/80 dark:bg-gray-700/80"
@@ -28,7 +40,7 @@ const MascotaCard = ({ mascota }) => {
         <i className={`bi bi-heart${isFavorite ? "-fill" : ""} text-2xl`}></i>
       </button>
 
-      {/* Imagen de la mascota */}
+      {/* Resto del contenido de la card */}
       <div className="relative w-full h-56 md:h-64 lg:h-72 overflow-hidden">
         <img
           src={mascota.image}
@@ -49,14 +61,13 @@ const MascotaCard = ({ mascota }) => {
           </h4>
         </div>
 
-        {/* Detalles principales - con íconos de Bootstrap */}
+        {/* Detalles principales */}
         <div className="grid grid-cols-2 gap-y-3 gap-x-2 text-sm text-gray-700 dark:text-gray-300 mb-5">
           <p className="flex items-center">
             <i className="bi bi-clock-fill text-indigo-500 mr-2 text-lg"></i>
             <span>{mascota.age} años</span>
           </p>
           <p className="flex items-center">
-            {/* Ícono de género: bi-gender-male o bi-gender-female */}
             <i className={`bi bi-gender-${mascota.gender.toLowerCase()} text-indigo-500 mr-2 text-lg`}></i>
             <span className="capitalize">{mascota.gender}</span>
           </p>
@@ -64,7 +75,6 @@ const MascotaCard = ({ mascota }) => {
             <i className="bi bi-tag-fill text-indigo-500 mr-2 text-lg"></i>
             <span>{mascota.size}</span>
           </p>
-          {/* Personalidad ahora está aquí */}
           <p className="flex items-center col-span-2">
             <i className="bi bi-person-fill text-indigo-500 mr-2 text-lg"></i>
             <span className="font-semibold text-gray-700 dark:text-gray-300">Personalidad:</span>

@@ -1,63 +1,93 @@
 import { createContext, useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 
-// Crea el contexto para los favoritos.
 export const FavoritosContext = createContext();
 
-
 const FavoritosProvider = ({ children }) => {
-  // Estado para la lista de favoritos, inicializado desde localStorage.
+  // Estado inicial seguro con validación
   const [favoritos, setFavoritos] = useState(() => {
-    return JSON.parse(localStorage.getItem("favoritos")) || [];
+    try {
+      const saved = localStorage.getItem("favoritos");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Validar la estructura del objeto
+        return {
+          refugios: Array.isArray(parsed.refugios) ? parsed.refugios : [],
+          mascotas: Array.isArray(parsed.mascotas) ? parsed.mascotas : []
+        };
+      }
+      return { refugios: [], mascotas: [] };
+    } catch (error) {
+      console.error("Error al cargar favoritos:", error);
+      return { refugios: [], mascotas: [] };
+    }
   });
 
-  // Usamos una ref para guardar el estado anterior de favoritos.
   const prevFavoritosRef = useRef(favoritos);
 
-  /**
-   * Hook de efecto para guardar los favoritos en localStorage y mostrar notificaciones.
-   * Se ejecuta cada vez que la lista `favoritos` cambia.
-   */
-  useEffect(() => {
-    localStorage.setItem("favoritos", JSON.stringify(favoritos));
-    
-    // Comparamos el estado actual con el anterior para detectar si se agregó un nuevo personaje.
-    if (favoritos.length > prevFavoritosRef.current.length) {
-      const nuevoFavorito = favoritos[favoritos.length - 1];
-      if (nuevoFavorito) {
-        toast.success(`"${nuevoFavorito.name}" agregado a favoritos.`);
-      }
+  // Función segura para agregar favoritos
+  const agregarAFavoritos = (item, tipo) => {
+    if (!item || !item.id || !['refugios', 'mascotas'].includes(tipo)) {
+      console.error("Datos inválidos para agregar a favoritos");
+      return;
     }
-    
-    // Actualizamos la ref con el estado actual para la próxima comparación.
-    prevFavoritosRef.current = favoritos;
-    
-  }, [favoritos]);
 
-
-  const agregarAFavoritos = (character) => {
-    setFavoritos((prev) => {
-      const existente = prev.find((item) => item.id === character.id);
-      if (existente) {
-        toast.info("Este personaje ya está en tus favoritos.");
+    setFavoritos(prev => {
+      const currentList = Array.isArray(prev[tipo]) ? prev[tipo] : [];
+      const existe = currentList.some(fav => fav.id === item.id);
+      
+      if (existe) {
+        toast.info(`Este ${tipo === 'refugios' ? 'refugio' : 'mascota'} ya está en favoritos`);
         return prev;
-      } else {
-        return [...prev, character];
       }
+
+      return {
+        ...prev,
+        [tipo]: [...currentList, item]
+      };
     });
   };
 
+  // Función segura para eliminar favoritos
+  const eliminarDeFavoritos = (id, tipo) => {
+    if (!id || !['refugios', 'mascotas'].includes(tipo)) {
+      console.error("Datos inválidos para eliminar de favoritos");
+      return;
+    }
 
-  const eliminarDeFavoritos = (id) => {
-    setFavoritos((prev) => prev.filter((item) => item.id !== id));
-    toast.warn("Personaje eliminado de favoritos.");
+    setFavoritos(prev => ({
+      ...prev,
+      [tipo]: Array.isArray(prev[tipo]) ? prev[tipo].filter(item => item.id !== id) : []
+    }));
+    toast.warn(`${tipo === 'refugios' ? 'Refugio' : 'Mascota'} eliminado de favoritos`);
   };
 
+  // Función para vaciar favoritos
+  const vaciarFavoritos = (tipo) => {
+    if (!['refugios', 'mascotas'].includes(tipo)) {
+      console.error("Tipo inválido para vaciar favoritos");
+      return;
+    }
 
-  const vaciarFavoritos = () => {
-    setFavoritos([]);
-    toast.warn("Se ha vaciado la lista de favoritos.");
+    setFavoritos(prev => ({
+      ...prev,
+      [tipo]: []
+    }));
+    toast.warn(`Favoritos de ${tipo} vaciados`);
   };
+
+  // Efecto para persistencia con validación
+  useEffect(() => {
+    try {
+      localStorage.setItem("favoritos", JSON.stringify({
+        refugios: Array.isArray(favoritos.refugios) ? favoritos.refugios : [],
+        mascotas: Array.isArray(favoritos.mascotas) ? favoritos.mascotas : []
+      }));
+      prevFavoritosRef.current = favoritos;
+    } catch (error) {
+      console.error("Error al guardar favoritos:", error);
+    }
+  }, [favoritos]);
 
   return (
     <FavoritosContext.Provider
@@ -65,7 +95,7 @@ const FavoritosProvider = ({ children }) => {
         favoritos,
         agregarAFavoritos,
         eliminarDeFavoritos,
-        vaciarFavoritos,
+        vaciarFavoritos
       }}
     >
       {children}
