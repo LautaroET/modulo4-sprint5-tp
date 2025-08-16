@@ -1,9 +1,7 @@
 import React from "react";
 import RefugioCard from "./RefugioCard";
-import Button from "./Button";
 
-function RefugioList({ refugios, allRefugios, onShowMore }) {
-  const canShowMore = refugios.length < allRefugios.length;
+function RefugioList({ refugios }) {
   
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4 max-w-7xl mx-auto">
@@ -13,13 +11,7 @@ function RefugioList({ refugios, allRefugios, onShowMore }) {
             <RefugioCard key={refugio.id} refugio={refugio} />
           ))}
           
-          {canShowMore && (
-            <div className="col-span-full flex justify-center mt-8">
-              <Button onClick={onShowMore}>
-                Mostrar más refugios
-              </Button>
-            </div>
-          )}
+          {/* El paginador se renderiza ahora en el componente padre, Refugios.jsx */}
         </>
       ) : (
         <p className="col-span-full text-center text-xl text-gray-600 dark:text-gray-300">
@@ -31,9 +23,3 @@ function RefugioList({ refugios, allRefugios, onShowMore }) {
 }
 
 export default RefugioList;
-
-
-
-
-
-

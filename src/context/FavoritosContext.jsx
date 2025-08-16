@@ -4,11 +4,7 @@ import { toast } from "react-toastify";
 // Crea el contexto para los favoritos.
 export const FavoritosContext = createContext();
 
-/**
- * @component FavoritosProvider
- * @param {{children: React.ReactNode}} props - Los componentes hijos que tendrán acceso al contexto.
- * @description Proveedor de contexto para gestionar la lista de personajes favoritos.
- */
+
 const FavoritosProvider = ({ children }) => {
   // Estado para la lista de favoritos, inicializado desde localStorage.
   const [favoritos, setFavoritos] = useState(() => {
@@ -38,11 +34,7 @@ const FavoritosProvider = ({ children }) => {
     
   }, [favoritos]);
 
-  /**
-   * @function agregarAFavoritos
-   * @param {Object} character - El objeto del personaje a agregar.
-   * @description Agrega un personaje a la lista de favoritos si no existe.
-   */
+
   const agregarAFavoritos = (character) => {
     setFavoritos((prev) => {
       const existente = prev.find((item) => item.id === character.id);
@@ -55,20 +47,13 @@ const FavoritosProvider = ({ children }) => {
     });
   };
 
-  /**
-   * @function eliminarDeFavoritos
-   * @param {number} id - El ID del personaje a eliminar.
-   * @description Elimina un personaje de la lista de favoritos por su ID.
-   */
+
   const eliminarDeFavoritos = (id) => {
     setFavoritos((prev) => prev.filter((item) => item.id !== id));
     toast.warn("Personaje eliminado de favoritos.");
   };
 
-  /**
-   * @function vaciarFavoritos
-   * @description Vacía por completo la lista de favoritos.
-   */
+
   const vaciarFavoritos = () => {
     setFavoritos([]);
     toast.warn("Se ha vaciado la lista de favoritos.");

@@ -21,12 +21,14 @@ const Home = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-          <Link 
-            to="/adoptar" 
-            className="bg-amber-300 hover:bg-amber-400 text-blue-900 font-bold py-3 px-6 rounded-full text-lg transition duration-300 ease-in-out shadow-lg transform hover:shadow-xl dark:text-gray-900 dark:bg-yellow-400 dark:hover:bg-yellow-500"
-          >
-            Quiero Adoptar
-          </Link>
+          <button >
+            <Link 
+              to="/adoptar" 
+              className="bg-amber-300 hover:bg-amber-400 text-blue-900 font-bold py-3 px-6 rounded-full text-lg transition duration-300 ease-in-out shadow-lg transform hover:shadow-xl dark:text-gray-900 dark:bg-yellow-400 dark:hover:bg-yellow-500"
+            >
+              Quiero Adoptar
+            </Link>
+          </button>
           <Link 
             to="/mascotas" 
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 ease-in-out shadow-lg transform hover:shadow-xl dark:bg-indigo-700 dark:hover:bg-indigo-600 dark:text-gray-100"

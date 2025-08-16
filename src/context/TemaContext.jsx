@@ -3,11 +3,6 @@ import React, { createContext, useState, useEffect } from "react";
 // Crea un nuevo contexto llamado TemaContext para gestionar el tema.
 export const TemaContext = createContext();
 
-/**
- * @component TemaProvider
- * @param {{children: React.ReactNode}} props - Los componentes hijos que tendrán acceso al contexto.
- * @description Proveedor de contexto para gestionar el tema de la aplicación (claro/oscuro).
- */
 const TemaProvider = ({ children }) => {
   // Estado para el tema oscuro, inicializado desde localStorage.
   const [temaOscuro, setTemaOscuro] = useState(() => {
@@ -29,10 +24,6 @@ const TemaProvider = ({ children }) => {
     }
   }, [temaOscuro]);
 
-  /**
-   * @function alternarTema
-   * @description Invierte el valor actual de `temaOscuro`.
-   */
   const alternarTema = () => {
     setTemaOscuro((prev) => !prev);
   };

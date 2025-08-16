@@ -5,10 +5,12 @@ import SearchInput from "../components/SearchInput";
 import Button from "../components/Button";
 import { useRefugios } from "../hook/useRefugios";
 import { useNavigate } from 'react-router-dom';
+import Pagination from "../components/Pagination";
 
 const Refugios = () => {
   const [searchValue, setSearchValue] = useState("");
-  const { refugios, allRefugios, isLoading, handleShowMore } = useRefugios(searchValue);
+  // Recibe los nuevos valores y la función del hook
+  const { refugios, allRefugios, isLoading, totalPages, currentPage, handlePageChange } = useRefugios(searchValue);
   const navigate = useNavigate();
 
   const handleAddRefugio = () => {
@@ -16,7 +18,7 @@ const Refugios = () => {
   };
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-900 min-h-screen py-8 transition-colors duration-700">
+    <div className="bg-gray-100 dark:bg-gray-900 min-h-screen py-8 transition-colors duration-700 rounded-lg shadow-md">
       <div className="container mx-auto px-4 md:px-8">
         
         {/* Sección de cabecera con el título y el botón */}
@@ -39,11 +41,18 @@ const Refugios = () => {
         {isLoading ? (
           <Loader />
         ) : (
-          <RefugioList 
-            refugios={refugios} 
-            allRefugios={allRefugios} 
-            onShowMore={handleShowMore} 
-          />
+          <>
+            <RefugioList 
+              refugios={refugios} 
+              allRefugios={allRefugios} 
+            />
+            {/* Agrega el componente de paginación aquí */}
+            <Pagination 
+              totalPages={totalPages} 
+              currentPage={currentPage} 
+              onPageChange={handlePageChange} 
+            />
+          </>
         )}
       </div>
     </div>
