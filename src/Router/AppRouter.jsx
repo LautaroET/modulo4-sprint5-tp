@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
+import Home from '../pages/Home'
 import Refugios from '../pages/Refugio';
 import RefugioDetail from '../pages/RefugioDetail';
 import RefugioCreate from '../pages/RefugioCreate';
@@ -17,7 +18,7 @@ import Perfil from '../pages/Perfil'
 function AppRouter() {
   return (
     <Routes>
-      <Route path="/home" element={<Home />} />
+      <Route path='/' element={<Home/>}/>
       <Route path="/refugios" element={<Refugios />} />
       <Route path="/refugios/nuevo" element={<RefugioCreate />} />
       <Route path="/refugios/:id" element={<RefugioDetail />} />
