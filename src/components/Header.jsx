@@ -19,7 +19,7 @@ function Header({ onToggleFavorites }) {
         {/* Logo y título */}
         <div className="flex items-center gap-3">
           <img
-            src={"../src/assets/img/patitas.png"}
+            src={"/img/patitas.png"}
             alt="Logo de patitas"
             className="w-16 h-16 object-contain"
           />
