@@ -15,7 +15,7 @@
           <div className="flex justify-center items-center mb-12">
             <img 
               className="rounded-lg shadow-xl max-w-full h-auto transform transition-all duration-500 hover:scale-105 border-4 border-amber-300" 
-              src="/public/img/home-presenta.webp" 
+              src="/img/home-presenta.webp" 
               alt="Un perro y un gato juntos, simbolizando la amistad y la adopción de mascotas." 
             />
           </div>
