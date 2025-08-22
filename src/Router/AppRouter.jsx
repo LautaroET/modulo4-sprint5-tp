@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
-import Home from '../pages/Home'
+import Home from '../pages/Home';
 import Refugios from '../pages/Refugio';
 import RefugioDetail from '../pages/RefugioDetail';
 import RefugioCreate from '../pages/RefugioCreate';
