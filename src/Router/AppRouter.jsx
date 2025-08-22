@@ -17,7 +17,7 @@ import Perfil from '../pages/Perfil'
 function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/refugios" element={<Refugios />} />
       <Route path="/refugios/nuevo" element={<RefugioCreate />} />
       <Route path="/refugios/:id" element={<RefugioDetail />} />
