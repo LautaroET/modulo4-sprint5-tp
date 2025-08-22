@@ -1,4 +1,3 @@
-// src/hook/useMascotas.js
 import { useState, useEffect } from "react";
 import { getAllMascotas } from "../services/apiService";
 

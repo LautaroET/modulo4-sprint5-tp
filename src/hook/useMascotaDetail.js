@@ -1,4 +1,3 @@
-// src/hook/useMascotaDetail.js
 import { useState, useEffect } from 'react';
 import { getMascotaById } from '../services/apiService';
 

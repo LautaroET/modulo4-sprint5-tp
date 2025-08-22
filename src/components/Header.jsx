@@ -1,17 +1,21 @@
 import React, { useContext, useState } from "react";
 import { TemaContext } from "../context/TemaContext";
 import { navbarLink } from "../utils/link";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Header({ onToggleFavorites }) {
   const { temaOscuro, alternarTema } = useContext(TemaContext);
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  // 1. Inicializar useNavigate aquí
+  const navigate = useNavigate();
+
   return (
-    <header className="relative w-full min-h-[120px] bg-gradient-to-r from-blue-700 to-indigo-900  transition-colors duration-700 dark:from-indigo-900 dark:to-gray-900 rounded-b-lg shadow-md">
+    <header className="relative w-full min-h-[120px] bg-gradient-to-r from-blue-700 to-indigo-900  transition-colors duration-700 dark:from-indigo-900 dark:to-gray-900 rounded-b-lg shadow-md">
       {/* Contenedor principal para el contenido del header */}
       <div className="container mx-auto flex items-center justify-between p-4">
+      <Link to="/">
         {/* Logo y título */}
         <div className="flex items-center gap-3">
           <img
@@ -24,6 +28,7 @@ function Header({ onToggleFavorites }) {
             <span className="text-amber-300">Rescate</span>
           </h1>
         </div>
+      </Link>
 
         {/* Botones de utilidades y menú de hamburguesa */}
         <div className="flex items-center gap-4 md:gap-6">
@@ -57,6 +62,8 @@ function Header({ onToggleFavorites }) {
 
           {/* Botón para Mi Cuenta (solo visible en escritorio) */}
           <button
+            // 2. Usar la función navigate aquí
+            onClick={() => navigate('/auth')}
             className="hidden md:block text-white p-2 rounded-full bg-white/20 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-amber-300 hover:scale-110 transition-transform duration-300"
             aria-label="Mi Cuenta"
           >
@@ -86,11 +93,7 @@ function Header({ onToggleFavorites }) {
           {navbarLink.map((link) => {
             const isHowToAdopt = link.title === "Cómo Adoptar ";
             
-            let linkClasses = "text-white text-base font-medium px-4 py-2 rounded-full inline-block hover:text-amber-300 transition-all duration-300 transform hover:scale-105";
-
-            if (isHowToAdopt) {
-              linkClasses = "text-white text-base font-bold px-4 py-2 rounded-full inline-block hover:text-amber-300 transition-all duration-300 transform hover:scale-105";
-            }
+            const linkClasses = `text-white text-base px-4 py-2 rounded-full inline-block hover:text-amber-300 transition-all duration-300 transform hover:scale-105 ${isHowToAdopt ? "font-bold" : "font-medium"}`;
             
             return (
               <li key={link.id}>

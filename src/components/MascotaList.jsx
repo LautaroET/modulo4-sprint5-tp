@@ -1,4 +1,3 @@
-// src/components/MascotaList.jsx - Versión optimizada
 import React from "react";
 import MascotaCard from "./MascotaCard";
 

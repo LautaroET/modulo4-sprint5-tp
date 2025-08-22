@@ -9,12 +9,11 @@ import Pagination from "../components/Pagination";
 
 const Refugios = () => {
   const [searchValue, setSearchValue] = useState("");
-  // Recibe los nuevos valores y la función del hook
   const { refugios, allRefugios, isLoading, totalPages, currentPage, handlePageChange } = useRefugios(searchValue);
   const navigate = useNavigate();
 
   const handleAddRefugio = () => {
-    navigate('/nuevo-refugio');
+    navigate('/refugios/nuevo');
   };
 
   return (

@@ -1,34 +1,26 @@
-// src/pages/Mascota.jsx
 import React, { useState } from 'react';
 import MascotaList from "../components/MascotaList";
 import Loader from "../components/Loader";
 import SearchInput from "../components/SearchInput";
-import Button from "../components/Button";
 import { useMascotas } from "../hook/useMascotas";
-import { useNavigate } from 'react-router-dom';
 import Pagination from "../components/Pagination";
 
 const Mascotas = () => {
   const [searchValue, setSearchValue] = useState("");
-  const { mascotas, allMascotas, isLoading, totalPages, currentPage, handlePageChange } = useMascotas(searchValue);
-  const navigate = useNavigate();
-
-  const handleAddMascota = () => {
-    navigate('/nueva-mascota');
-  };
+  const { mascotas, isLoading, totalPages, currentPage, handlePageChange } = useMascotas(searchValue);
 
   return (
     <div className="bg-gray-100 dark:bg-gray-900 min-h-screen py-8 transition-colors duration-700 rounded-lg shadow-md">
       <div className="container mx-auto px-4 md:px-8">
         
-        {/* Sección de cabecera con el título y el botón */}
-        <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
-          <h1 className="text-4xl font-extrabold text-indigo-700 dark:text-blue-400 text-center sm:text-left tracking-tight">
+        {/* Título centrado */}
+        <div className="flex flex-col items-center justify-center mb-8">
+          <h1 className="text-4xl font-extrabold text-indigo-700 dark:text-blue-400 text-center tracking-tight">
             Mascotas en Adopción
           </h1>
-          <Button onClick={handleAddMascota}>
-            <i className="bi bi-plus-circle-fill mr-2"></i>Agregar Mascota
-          </Button>
+          <p className="text-gray-600 dark:text-gray-300 mt-2 text-center">
+            Encuentra a tu compañero perfecto entre nuestras mascotas disponibles
+          </p>
         </div>
 
         {/* Sección del buscador, centrada y con un ancho máximo */}
